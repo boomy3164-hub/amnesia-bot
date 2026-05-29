@@ -135,17 +135,12 @@ Skill: ${skill}`
         const rank = interaction.options.getString('rank');
         const profile = interaction.options.getString('profile');
 
-        let avatar =
-        'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-310x310-Png/1';
+        let avatar = '1';
 
         const match = profile.match(/users\/(\d+)/);
 
         if (match) {
-
-            const id = match[1];
-
-            avatar =
-            `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=420x420&format=Png&isCircular=false`;
+            avatar = match[1];
         }
 
         leaderboard[place] = {
@@ -171,7 +166,9 @@ Region: ${region}
 
 ${rank}`
             )
-            .setImage(avatar);
+            .setThumbnail(
+                `https://www.roblox.com/headshot-thumbnail/image?userId=${avatar}&width=420&height=420&format=png`
+            );
 
         await interaction.reply({
             embeds: [embed]
@@ -233,7 +230,9 @@ Region: ${data.region}
 
 ${data.rank}`
                     )
-                    .setImage(data.avatar);
+                    .setThumbnail(
+                        `https://www.roblox.com/headshot-thumbnail/image?userId=${data.avatar}&width=420&height=420&format=png`
+                    );
             }
 
             await interaction.followUp({
