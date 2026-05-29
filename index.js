@@ -130,7 +130,7 @@ Skill: ${skill}`
         const profile = interaction.options.getString('profile');
 
         let avatar =
-        'https://www.roblox.com/headshot-thumbnail/image?userId=1&width=420&height=420&format=png';
+        'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-310x310-Png/1';
 
         const match = profile.match(/users\/(\d+)/);
 
