@@ -39,7 +39,10 @@ client.on('interactionCreate', async interaction => {
     const hasAdmin =
         interaction.member.permissions.has(PermissionsBitField.Flags.Administrator);
 
+    // =========================
     // /rank
+    // =========================
+
     if (interaction.commandName === 'rank') {
 
         if (!hasRole && !hasAdmin && interaction.user.id !== interaction.guild.ownerId) {
@@ -112,7 +115,10 @@ Skill: ${skill}`
         });
     }
 
+    // =========================
     // /setlb
+    // =========================
+
     else if (interaction.commandName === 'setlb') {
 
         if (!hasRole && !hasAdmin && interaction.user.id !== interaction.guild.ownerId) {
@@ -154,7 +160,7 @@ Skill: ${skill}`
 
         const embed = new EmbedBuilder()
             .setColor('#2b2d31')
-            .setTitle(`#${place} ${roblox}`)
+            .setTitle(`#${place} | ${roblox}`)
             .setDescription(
 `${user}
 
@@ -171,15 +177,26 @@ ${rank}`
         });
     }
 
+    // =========================
     // /leaderboard
+    // =========================
+
     else if (interaction.commandName === 'leaderboard') {
 
         await interaction.deferReply();
 
-        const page = interaction.options.getInteger('page');
+        let page = interaction.options.getInteger('page');
 
-        const start = ((page - 1) * 10) + 1;
-        const end = start + 9;
+        if (!page || page < 1) page = 1;
+
+        if (page > 5) {
+            return interaction.editReply({
+                content: 'Leaderboard only goes to page 5.'
+            });
+        }
+
+        const start = (page * 10) - 9;
+        const end = page * 10;
 
         for (let i = start; i <= end; i++) {
 
@@ -205,7 +222,7 @@ VACANT`
             } else {
 
                 embed
-                    .setTitle(`#${i} ${data.roblox}`)
+                    .setTitle(`#${i} | ${data.roblox}`)
                     .setDescription(
 `${data.user}
 
@@ -224,7 +241,7 @@ ${data.rank}`
         }
 
         await interaction.editReply({
-            content: `Showing ${start}-${end}`
+            content: `Showing leaderboard ${start}-${end}`
         });
     }
 });
