@@ -145,10 +145,11 @@ Skill: ${skill}`
             const id = match[1];
 
             avatar =
-            `https://www.roblox.com/headshot-thumbnail/image?userId=${id}&width=420&height=420&format=png`;
+            `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=420x420&format=Png&isCircular=false`;
         }
 
         leaderboard[place] = {
+            place,
             user: `<@${user.id}>`,
             roblox,
             region,
@@ -170,7 +171,7 @@ Region: ${region}
 
 ${rank}`
             )
-            .setThumbnail(avatar);
+            .setImage(avatar);
 
         await interaction.reply({
             embeds: [embed]
@@ -222,7 +223,7 @@ VACANT`
             } else {
 
                 embed
-                    .setTitle(`#${i} | ${data.roblox}`)
+                    .setTitle(`#${data.place} | ${data.roblox}`)
                     .setDescription(
 `${data.user}
 
@@ -232,7 +233,7 @@ Region: ${data.region}
 
 ${data.rank}`
                     )
-                    .setThumbnail(data.avatar);
+                    .setImage(data.avatar);
             }
 
             await interaction.followUp({
