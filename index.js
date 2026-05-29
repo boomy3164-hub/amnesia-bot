@@ -135,29 +135,37 @@ Skill: ${skill}`
         const rank = interaction.options.getString('rank');
         const profile = interaction.options.getString('profile');
 
-        let avatar = '1';
+        let avatar =
+        'https://tr.rbxcdn.com/30DAY-AvatarHeadshot-310x310-Png/1';
 
         const match = profile.match(/users\/(\d+)/);
 
         if (match) {
-            avatar = match[1];
+
+            const userId = match[1];
+
+            avatar =
+            `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=420&height=420&format=png`;
         }
 
         leaderboard[place] = {
-            place,
+            place: place,
             user: `<@${user.id}>`,
-            roblox,
-            region,
-            rank,
-            avatar
+            roblox: roblox,
+            region: region,
+            rank: rank,
+            avatar: avatar
         };
 
-        fs.writeFileSync('./leaderboard.json', JSON.stringify(leaderboard, null, 2));
+        fs.writeFileSync(
+            './leaderboard.json',
+            JSON.stringify(leaderboard, null, 2)
+        );
 
         const embed = new EmbedBuilder()
-            .setColor('#2b2d31')
-            .setTitle(`#${place} | ${roblox}`)
-            .setDescription(
+        .setColor('#2b2d31')
+        .setTitle(`#${place} | ${roblox}`)
+        .setDescription(
 `${user}
 
 ≪《 | ${roblox} | 》≫
@@ -165,10 +173,8 @@ Skill: ${skill}`
 Region: ${region}
 
 ${rank}`
-            )
-            .setThumbnail(
-                `https://www.roblox.com/headshot-thumbnail/image?userId=${avatar}&width=420&height=420&format=png`
-            );
+        )
+        .setThumbnail(avatar);
 
         await interaction.reply({
             embeds: [embed]
@@ -230,9 +236,7 @@ Region: ${data.region}
 
 ${data.rank}`
                     )
-                    .setThumbnail(
-                        `https://www.roblox.com/headshot-thumbnail/image?userId=${data.avatar}&width=420&height=420&format=png`
-                    );
+                    .setThumbnail(data.avatar);
             }
 
             await interaction.followUp({
